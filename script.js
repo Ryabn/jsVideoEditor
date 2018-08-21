@@ -3,6 +3,7 @@ var video1;
 var video2;
 var video3;
 var ctx;
+var capturer;
 
 
 function load(){
@@ -13,19 +14,31 @@ function load(){
     // video2 = videoCreator('assets/sw1.mp4'); 
     // video3 = videoCreator('assets/sw2.mp4'); 
     // video3.muted = false;
-
-    setInterval(drawVideo, 1000/60);
+    capturer = new CCapture({
+        format: 'webm'
+    });
+}
+function record(){
+    video1.play();
+    setInterval(drawVideo, 1000/120);
+    capturer.start();
 }
 
+function stop(){
+    capturer.stop();
+    capturer.save(function(blob){
+        console.log(blob);
+    });
+}
 function drawVideo(){
-    ctx.drawImage(video1, 200, 200, video1.videoWidth/2, video1.videoHeight/2, 0, 0, 890, 400);
-    // ctx.drawImage(video2, 0, 800);
-    // ctx.drawImage(video3, 0, 1616);
+    ctx.drawImage(video1, 0, 0, video1.videoWidth, video1.videoHeight, 0, 0, 990, 408);
+    capturer.capture(canvas);
 }
 function videoCreator(fileName){
     let video = document.createElement('video');
     video.src = fileName;
-    video.play();
+    // video.crossOrigin = "Anonymous";
+    // video.play();
     video.muted = true;
     video.addEventListener( "loadedmetadata", function (e) {
         canvas.height = this.videoHeight;

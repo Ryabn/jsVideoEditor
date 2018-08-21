@@ -5,9 +5,12 @@
             JSVideoEditor
         </title>
         <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="CCapture.all.min.js"></script>
         <script src="script.js"></script>
     </head>
     <body onload="load();">
-        <canvas id="canvas"></canvas>
+        <canvas id="canvas" crossorigin="use-credentials"></canvas>
+        <div style="height: 300px; width: 300px; background-color:blue;" onclick="record();"></div>
+        <div style="height: 300px; width: 300px; background-color:green;" onclick="stop();"></div>
     </body>
 </html>
